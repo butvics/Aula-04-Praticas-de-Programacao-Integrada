@@ -1,13 +1,12 @@
 package br.usjt.OO;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
 
 /**
  * Servlet implementation class ManterPaisController
@@ -40,12 +39,10 @@ public class ManterPaisController extends HttpServlet {
 		int idPais = cs.criar(pais);
 		pais = cs.carregar(idPais);
 		
-		PrintWriter out = response.getWriter();
-		out.println("<html><head><title>Cliente Cadastrado</title></head><body>");
-		out.println(	"Id: "+pais.getIdPais()+"<br>");
-		out.println(	"Nome: "+pais.getNomePais()+"<br>");
-		out.println(	"População: "+pais.getPopulacaoPais()+"<br>");
-		out.println(	"Área: "+pais.getAreaPais()+"<br>");
-	    out.println("</body></html>");
-	}
+        request.setAttribute("pais", pais);
+        
+        RequestDispatcher view = 
+        request.getRequestDispatcher("PaisJSP.jsp");
+        view.forward(request, response);
+    }
 }
